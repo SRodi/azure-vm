@@ -62,9 +62,9 @@ After running the instructions mentioned in the section [Usage](#usage) the stru
     cd <repository-directory>
     ```
 
-2. **Initialize Terraform**:
+2. **Initialize OpenTF**:
     ```sh
-    terraform init
+    tofu init
     ```
 
 3. **Create a `terraform.tfvars` file**:
@@ -82,20 +82,20 @@ After running the instructions mentioned in the section [Usage](#usage) the stru
 
 4. **Plan the infrastructure**:
     ```sh
-    terraform plan
+    tofu plan
     ```
 
 5. **Apply the infrastructure changes**:
     ```sh
-    terraform apply
+    tofu apply
     ```
 
 
 ## Cleanup
 
-To destroy the infrastructure managed by Terraform, run:
+To destroy the infrastructure managed by OpenTF, run:
 ```sh
-terraform destroy
+tofu destroy
 ```
 
 ## License
