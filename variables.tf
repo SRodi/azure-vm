@@ -24,3 +24,8 @@ variable "prefix" {
   type        = string
   default     = "example-vm"
 }
+
+variable "path_to_public_key" {
+  description = "The path to the public key to use for SSH."
+  type        = string
+}

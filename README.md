@@ -74,10 +74,11 @@ After running the instructions mentioned in the section [Usage](#usage) the stru
 
     Populate `terraform.tfvars` with the required variables:
     ```hcl
-    subscription_id = "<your-subscription-id>"
-    tenant_id       = "<your-tenant-id>"
-    prefix          = "<resource-prefix>"
-    location        = "<resource-location>"
+    subscription_id    = "<your-subscription-id>"
+    tenant_id          = "<your-tenant-id>"
+    prefix             = "<resource-prefix>"
+    location           = "<resource-location>"
+    path_to_public_key = "<path-to-your-local-ssh-public-key>"
     ```
 
 4. **Plan the infrastructure**:
