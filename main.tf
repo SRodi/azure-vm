@@ -1,13 +1,14 @@
 # Fetch the resource group (make sure this exists in Azure)
-data "azurerm_resource_group" "resource_group" {
+resource "azurerm_resource_group" "resource_group" {
   name     = var.resource_group_name
+  location = var.location
 }
 
 # Define the public IP
 resource "azurerm_public_ip" "pub_ip" {
   name                = "${var.prefix}-public-ip"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
   allocation_method   = "Static"
   sku                 = "Standard"
 }
@@ -16,14 +17,14 @@ resource "azurerm_public_ip" "pub_ip" {
 resource "azurerm_virtual_network" "virtual_netowrk" {
   name                = "${var.prefix}-virtual-network"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
   address_space       = ["10.128.0.0/16"] # CIDR notation for the IP range    
 }
 
 # Create a subnet
 resource "azurerm_subnet" "subnet" {
   name                 = "${var.prefix}-subnet"
-  resource_group_name  = data.azurerm_resource_group.resource_group.name
+  resource_group_name  = azurerm_resource_group.resource_group.name
   virtual_network_name = azurerm_virtual_network.virtual_netowrk.name
   address_prefixes     = ["10.128.0.0/24"] # CIDR notation for the IP range
 }
@@ -33,7 +34,7 @@ resource "azurerm_subnet" "subnet" {
 resource "azurerm_network_security_group" "network_security_group" {
   name                = "${var.prefix}-network-security-group"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
 
   security_rule {
     name                       = "SSH"
@@ -51,7 +52,7 @@ resource "azurerm_network_security_group" "network_security_group" {
 resource "azurerm_network_interface" "network_interface" {
   name                = "${var.prefix}-network-interface"
   location            = var.location
-  resource_group_name = data.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
 
   ip_configuration {
     name                          = "internal"
@@ -70,7 +71,7 @@ resource "azurerm_network_interface_security_group_association" "nsg_association
 # Define the virtual machine
 resource "azurerm_linux_virtual_machine" "vm" {
   name                = "${var.prefix}-vm"
-  resource_group_name = data.azurerm_resource_group.resource_group.name
+  resource_group_name = azurerm_resource_group.resource_group.name
   location            = var.location
   size                = "Standard_D2s_v3"
   admin_username      = var.prefix
