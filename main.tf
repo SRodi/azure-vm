@@ -73,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name                = "${var.prefix}-vm"
   resource_group_name = azurerm_resource_group.resource_group.name
   location            = var.location
-  size                = "Standard_D2s_v3"
+  size                = "Standard_D2pds_v5"
   admin_username      = var.prefix
 
   network_interface_ids = [
@@ -81,14 +81,15 @@ resource "azurerm_linux_virtual_machine" "vm" {
   ]
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    caching              = "ReadWrite" # ["None" "ReadOnly" "ReadWrite"]
+    storage_account_type = "Standard_LRS" # ["Premium_LRS" "Standard_LRS" "StandardSSD_LRS" "StandardSSD_ZRS" "Premium_ZRS"]
   }
 
+  # https://ubuntu.com/blog/ubuntu-supports-arm64-based-microsoft-azure-virtual-machines
   source_image_reference {
     publisher = "canonical"
-    offer     = "ubuntu-24_04-lts"
-    sku       = "server"
+    offer     = "0001-com-ubuntu-server-arm-preview-focal-preview"
+    sku       = "20_04-lts"
     version   = "latest"
   }
 
