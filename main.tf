@@ -85,11 +85,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Standard_LRS" # ["Premium_LRS" "Standard_LRS" "StandardSSD_LRS" "StandardSSD_ZRS" "Premium_ZRS"]
   }
 
-  # https://ubuntu.com/blog/ubuntu-supports-arm64-based-microsoft-azure-virtual-machines
   source_image_reference {
-    publisher = "canonical"
-    offer     = "0001-com-ubuntu-server-arm-preview-focal-preview"
-    sku       = "20_04-lts"
+    publisher = "almalinux"
+    offer     = "almalinux-arm"
+    sku       = "9-arm-gen2"
     version   = "latest"
   }
 
